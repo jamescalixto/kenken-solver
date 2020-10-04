@@ -141,11 +141,13 @@ function solve(puzzle, string = "") {
   }
 
   // Otherwise try different possibilities for the next possible element.
+  var return_solution = false;
   range(1, puzzle.side_length + 1).forEach((potential) => {
     let temp_string = string + potential;
     if (puzzle.checkCell(temp_string.length - 1, temp_string)) {
       let potential_solution = solve(puzzle, temp_string);
       if (potential_solution) {
+        return_solution = potential_solution;
         return potential_solution;
       }
     }
@@ -153,5 +155,5 @@ function solve(puzzle, string = "") {
 
   // If we have iterated through all possible next elements without success then there
   // is no solution.
-  return false;
+  return false || return_solution;
 }

@@ -34,3 +34,14 @@ Cell coordinates are 0-indexed. For an NxN puzzle, the top-left cell is `0`, the
 8  9  10 11
 12 13 14 15
 ```
+
+## Usage
+
+1. Create a new Puzzle by calling `new Puzzle()` with the puzzle in the above format as a parameter.
+2. Provide that Puzzle to `solve()` as a parameter. This will return `false` if a solution is not found, or a solution string consisting of the digits of the valid solution.
+
+## Notes
+
+- This solver uses a DFS-like traversal of the state space. While it runs instantaneously on most inputs, badly-behaved or pathological puzzles may cause excessive runtimes.
+- One possible optimization is precomputing the possible digits that can go in each cage; ex. for a `4-` cage in a puzzle with side length 6, the digits 3 and 4 should not be considered as possibilities. This theoretically allows for far fewer possibilities, but precomputing these was needlessly complicated.
+- The "correct" approach would be to use a linear optimization method that uses actual logic. We can enforce the row, column, and cage constraints as part of a linear program, and this would run much faster than a DFS search.
