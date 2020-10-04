@@ -18,7 +18,7 @@ A KenKen puzzle should be specified as a string with the digits `0-9`, the opera
 
 Puzzles are specified as a series of cages, in any order, separated by whitespace characters.
 
-Cages are specified in the following format:q
+Cages are specified in the following format:
 
 ```text
 [target][operation] [cell1] [cell2] ... [cellX]
