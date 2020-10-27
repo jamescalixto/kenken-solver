@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+h1,
+h2 {
+    margin: 0px;
+}
+
+h1 {
+    font-family: 'Secular One', 'Lucida Sans', Verdana, sans-serif;
+}
+
+#header {
+    text-align: center;
+}
+
+#canvas_container {
+    text-align: center;
+}

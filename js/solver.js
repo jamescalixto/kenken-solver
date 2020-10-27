@@ -19,9 +19,13 @@ class Cage {
   }
 
   // Check cage. Return false if all cells in cage are present in the solution string
-  // and the operation applied over the cells does NOT equal the target. Return true 
-  // otherwise.
+  // and the operation applied over the cells does NOT equal the target, or if some
+  // cells in cage are present in the solution string and it would be impossible for the
+  // operation applied over the cells to equal the target, regardless of the values of
+  // the remaining cells. Return true otherwise.
   checkCage(string) {
+    let string_array = string.split("").map(el => parseInt(el));
+
     // Subtraction and division operations need to have exactly two cells.
     if (this.operation == "-" || this.operation == "/") {
       if (this.cells.length != 2) {
@@ -32,11 +36,19 @@ class Cage {
       }
     }
 
-    if (Math.max(...this.cells) >= string.length) {
-      return true; // some cell is outside of the range.
+    if (Math.max(...this.cells) >= string.length) { // some cell is outside the range.
+      let truncated_cells = this.cells.filter((cell) => cell < string.length);
+      if (this.operation == "+") {
+        return truncated_cells.reduce((acc, elem) => { return acc + string_array[elem] }, 0) < this.target; // strictly less than because minimum of other cell is 1.
+      } else if (this.operation == "*") {
+        return truncated_cells.reduce((acc, elem) => { return acc * string_array[elem] }, 1) <= this.target; // LEQ because can potentially multiply by identity 1.
+      } else if (this.operation == "/") {
+        return truncated_cells[0] % this.target == 0 || this.target % truncated_cells[0] == 0; // only number must be divisor of or divisible by target.
+      }
+
+      return true; 
     }
 
-    let string_array = string.split("").map(el => parseInt(el));
     if (this.operation == "+") {
       return this.cells.reduce((acc, elem) => { return acc + string_array[elem] }, 0) == this.target;
     } else if (this.operation == "-") {
